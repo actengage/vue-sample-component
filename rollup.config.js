@@ -8,6 +8,7 @@ import json from 'rollup-plugin-json';
 import babel from 'rollup-plugin-babel';
 import serve from 'rollup-plugin-serve';
 import replace from 'rollup-plugin-replace';
+import { eslint } from "rollup-plugin-eslint";
 import progress from 'rollup-plugin-progress';
 import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
@@ -51,13 +52,13 @@ const SERVE_OPTIONS = {
 // The options for the watch plugin
 const WATCH_OPTIONS = {
     include: `${SRC}**`,
-    // port: 35730
+    port: 35730
 };
 
 // The options for the livereload plugin (undefined or object).
 const LIVERELOAD_OPTIONS = {
-    watch: SRC,
-    //port: 35730
+    watch: DIST,
+    port: 35730
 };
 
 // Define the list of output globals
@@ -112,7 +113,8 @@ const plugins = [
         exclude: NODE_MODULES
     }),
     globals(),
-    builtins()
+    builtins(),
+    eslint()
 ];
 
 // Add the serve/livereload plugins if watch argument has been passed
