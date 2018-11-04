@@ -25,6 +25,15 @@ import {
     WATCH
 } from './config';
 
+// An array of shared plugin. These will not be instantiated more than once.
+const shared = [];
+
+// If the watch constanst is set, then add the serve/livereload plugins
+if(WATCH) {
+    shared.push(serve(SERVE_OPTIONS));
+    shared.push(livereload(LIVERELOAD_OPTIONS));
+}
+
 /**
  * Return a function with an array of plugins.Merge the config with the
  * default values.
@@ -44,16 +53,6 @@ import {
  * })
  * ```
  */
-
-// An array of shared plugin. These will not be instantiated more than once.
-const shared = [];
-
-// If the watch constanst is set, then add the serve/livereload plugins
-if(WATCH) {
-    shared.push(serve(SERVE_OPTIONS));
-    shared.push(livereload(LIVERELOAD_OPTIONS));
-}
-
 export default (config = {}) => {
     const plugins = [
         // rollup-plugin-resolve
