@@ -1,7 +1,7 @@
 import plugins from './build/plugins';
 
 import {
-    ES_BUILD_OPTIONS,
+    BUILD_OPTIONS,
     DIST,
     EXTERNAL,
     EXTENSION_PREFIX,
@@ -27,7 +27,7 @@ export default [{
     },
     watch: WATCH_OPTIONS,
     external: EXTERNAL,
-    plugins: plugins()
+    plugins: plugins(BUILD_OPTIONS[PACKAGE_FORMAT])
 },{
     input: MAINJS,
     output: {
@@ -40,5 +40,5 @@ export default [{
     },
     watch: WATCH_OPTIONS,
     external: EXTERNAL,
-    plugins: plugins(ES_BUILD_OPTIONS)
+    plugins: plugins(BUILD_OPTIONS.es)
 }];

@@ -7,6 +7,15 @@ import { upperFirst } from 'lodash';
 // PostCSS plugin imports
 import cssnano from 'cssnano';
 
+// Build specific overrides
+export const BUILD_OPTIONS = {
+    es: {
+        postcss: {
+            extract: false
+        }
+    }
+};
+
 // Define the list of output globals
 export const OUTPUT_GLOBALS = {
     // 'vue': 'Vue'
@@ -83,11 +92,3 @@ export const EXTRACT_CSS = !!argv.configExtractCss || (
 export const POSTCSS_PLUGINS = [
     MINIFY ? cssnano() : null
 ];
-
-// The ES6 build config override. Since the UMD build exports the CSS, no need
-// for a second `PACKAGE_NAME.es.css` file since it
-export const ES_BUILD_OPTIONS = {
-    postcss: {
-        extract: false
-    }
-};
