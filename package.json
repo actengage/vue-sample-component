@@ -1,32 +1,39 @@
 {
     "name": "vue-sample-component",
-    "version": "0.0.3",
+    "version": "0.9.0",
     "devDependencies": {
         "@babel/cli": "^7.1.2",
         "@babel/core": "^7.1.2",
         "@babel/helper-plugin-utils": "^7.0.0",
         "@babel/plugin-proposal-export-default-from": "^7.0.0",
         "@babel/preset-env": "^7.1.0",
-        "@babel/preset-es2015": "^7.0.0-beta.53",
         "@babel/preset-react": "^7.0.0",
         "@vue/test-utils": "^1.0.0-beta.25",
-        "babel-core": "^7.0.0-bridge.0",
-        "babel-jest": "^22.4.4",
-        "babel-plugin-lodash": "^3.3.4",
-        "babel-preset-es2015-rollup": "^3.0.0",
+        "babel-eslint": "^10.0.1",
+        "babel-jest": "^23.6.0",
         "babel-preset-vue": "^2.0.2",
-        "jest": "^22.4.4",
-        "jest-cli": "^22.4.4",
-        "jest-serializer-vue": "^0.3.0",
+        "cssnano": "^4.1.7",
+        "eslint": "^5.8.0",
+        "eslint-config-standard": "^12.0.0",
+        "eslint-plugin-html": "^4.0.6",
+        "eslint-plugin-import": "^2.14.0",
+        "eslint-plugin-jest": "^21.27.1",
+        "eslint-plugin-node": "^8.0.0",
+        "eslint-plugin-promise": "^4.0.1",
+        "eslint-plugin-standard": "^4.0.0",
+        "eslint-plugin-vue": "^5.0.0-beta.3",
+        "jest": "^23.6.0",
+        "jest-cli": "^23.6.0",
+        "jest-serializer-vue": "^2.0.2",
         "jest-vue-preprocessor": "^1.4.0",
-        "jsdom": "^11.12.0",
-        "node-sass": "^4.9.4",
-        "parse5": "^2.2.3",
-        "rollup": "^0.57.1",
+        "jsdom": "^13.0.0",
+        "node-sass": "^4.10.0",
+        "parse5": "^5.1.0",
+        "rollup": "^0.67.0",
         "rollup-plugin-babel": "^4.0.3",
-        "rollup-plugin-commonjs": "^8.4.1",
-        "rollup-plugin-conditional": "^1.1.1",
-        "rollup-plugin-json": "^2.3.1",
+        "rollup-plugin-commonjs": "^9.2.0",
+        "rollup-plugin-eslint": "^5.0.0",
+        "rollup-plugin-json": "^3.1.0",
         "rollup-plugin-livereload": "^0.6.0",
         "rollup-plugin-node-builtins": "^2.1.2",
         "rollup-plugin-node-globals": "^1.4.0",
@@ -34,29 +41,31 @@
         "rollup-plugin-postcss": "^1.6.2",
         "rollup-plugin-progress": "^0.4.0",
         "rollup-plugin-replace": "^2.1.0",
-        "rollup-plugin-root-import": "^0.2.3",
         "rollup-plugin-sass": "^0.9.2",
-        "rollup-plugin-serve": "^0.4.2",
+        "rollup-plugin-serve": "^0.6.0",
         "rollup-plugin-uglify-es": "0.0.1",
-        "rollup-plugin-vue": "^3.0.0",
-        "vue-jest": "^1.4.0",
+        "rollup-plugin-vue": "github:objectivehtml/rollup-plugin-vue#patch-1",
+        "vue-jest": "^3.0.0",
         "vue-jest-utils": "^0.2.0",
         "vue-server-renderer": "^2.5.17",
-        "vue-template-compiler": "^2.5.17"
+        "vue-template-compiler": "^2.5.17",
+        "yargs": "^12.0.2"
     },
-    "dependencies": {
-        "lodash": "^4.17.11",
+    "peerDependencies": {
         "vue": "^2.5.17"
     },
     "scripts": {
-        "build": "rollup -c",
-        "dev": "rollup -c --watch",
+        "build": "./node_modules/.bin/rollup -c",
+        "dev": "./node_modules/.bin/rollup -c --watch",
         "commit": "git add -A && git commit -m $npm_package_version;",
+        "lint": "./node_modules/.bin/eslint src/** --ext .js --ext .vue",
+        "fix": "./node_modules/.bin/eslint src/** --ext .js --ext .vue --fix",
         "release-patch": "npm version patch --no-git-tag-version; npm run release;",
         "release-minor": "npm version minor --no-git-tag-version; npm run release;",
         "release-major": "npm version major --no-git-tag-version; npm run release;",
-        "release": "npm run build; npm run uglify; npm run commit; npm publish;",
-        "uglify": "rollup -c rollup.uglify.js"
+        "release": "npm run build; npm run uglify; npm run commit; npm publish; git push;",
+        "build-vendor": "./node_modules/.bin/rollup -c rollup.vendor.js;",
+        "uglify": "./node_modules/.bin/rollup -c --config-minify"
     },
     "jest": {
         "transform": {
@@ -77,7 +86,6 @@
         ],
         "snapshotSerializers": [
             "<rootDir>/node_modules/jest-serializer-vue"
-        ],
-        "mapCoverage": true
+        ]
     }
 }
