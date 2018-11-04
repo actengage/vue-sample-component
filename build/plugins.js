@@ -44,7 +44,17 @@ import {
  * })
  * ```
  */
-export default function(config = {}) {
+
+// An array of shared plugin. These will not be instantiated more than once.
+const shared = [];
+
+// If the watch constanst is set, then add the serve/livereload plugins
+if(WATCH) {
+    shared.push(serve(SERVE_OPTIONS));
+    shared.push(livereload(LIVERELOAD_OPTIONS));
+}
+
+export default (config = {}) => {
     const plugins = [
         // rollup-plugin-resolve
         resolve(Object.assign({
@@ -101,22 +111,11 @@ export default function(config = {}) {
         progress(config.progress)
     ];
 
-    // If the watch constanst is set, then add the serve/livereload plugins
-    if(WATCH) {
-        plugins.concat([
-            // rollup-plugin-serve
-            serve(Object.assign({}, SERVE_OPTIONS, config.serve)),
-
-            // rollup-plugin-livereload
-            livereload(Object.assign({}, LIVERELOAD_OPTIONS, config.livereload))
-        ]);
-    }
-
     // If the MINIFY constant is set, then add the uglify plugin.
     if(MINIFY) {
         // rollup-plugin-uglify-es
         plugins.push(uglify(config.uglify));
     }
 
-    return plugins.filter(value => !!value);
+    return plugins.concat(shared);
 };
