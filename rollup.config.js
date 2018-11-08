@@ -16,6 +16,7 @@ import {
 
 // Export the config object
 export default [{
+    cache: false,
     input: MAINJS,
     output: {
         name: NAMESPACE,

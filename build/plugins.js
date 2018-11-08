@@ -1,7 +1,10 @@
+import path from 'path';
 import vue from 'rollup-plugin-vue';
 import json from 'rollup-plugin-json';
 import babel from 'rollup-plugin-babel';
 import serve from 'rollup-plugin-serve';
+import css from 'rollup-plugin-css-only';
+import license from 'rollup-plugin-license';
 import postcss from 'rollup-plugin-postcss';
 import replace from 'rollup-plugin-replace';
 import uglify from 'rollup-plugin-uglify-es';
@@ -67,10 +70,16 @@ export default (config = {}) => {
         commonjs(Object.assign({
             include: NODE_MODULES
         }, config.commonjs)),
+        
+        // rollup-plugin-css-only
+        css(),
 
         // rollup-plugin-vue
         vue(Object.assign({
-            css: false
+            css: false,
+            defaultLang: {
+                style: 'postcss'
+            }
         }, config.vue || config.vuePlugin)),
 
         // rollup-plugin-postcss
@@ -82,7 +91,7 @@ export default (config = {}) => {
 
         // rollup-plugin-eslint
         eslint(Object.assign({
-            exclude: '**/*.css'
+            exclude: ['**/.scss', '**/*.css']
         }, config.eslint)),
 
         // rollup-plugin-babel
@@ -96,6 +105,20 @@ export default (config = {}) => {
             'process.env.SERVE_OPTIONS': JSON.stringify(SERVE_OPTIONS),
             'process.env.LIVERELOAD_OPTIONS': JSON.stringify(LIVERELOAD_OPTIONS)
         }, config.replace)),
+
+        // rollup-plugin-license
+        license(Object.assign({
+            sourceMap: true,
+            banner: {
+                file: path.join(__dirname, 'BANNER'),
+                encoding: 'utf-8'
+            },
+            thirdParty: {
+                output: path.join(__dirname, 'dependencies.txt'),
+                includePrivate: false, // Default is false.
+                encoding: 'utf-8', // Default is utf-8.
+            },
+        }, config.license)),
 
         // rollup-plugin-json
         json(config.json),

@@ -1,7 +1,5 @@
 <template>
-    <div>
-        <span class="message" v-html="message"/>
-    </div>
+    <div class="message" v-html="message" data-test="1"/>
 </template>
 
 <script>
@@ -14,6 +12,10 @@ export default {
             type: String,
             required: true
         }
+    },
+
+    mounted() {
+        console.log('1111');
     }
 
 };
@@ -21,26 +23,10 @@ export default {
 
 <style lang="scss">
 .sample-component {
-    background: rgb(200, 200, 200);
-
-    .message {
-        font-size: 1rem;
-    }
-
-    .test {
-        background: yellow;
-    }
+    background: rgb(200, 200, 3);
 
     .a {
         background: red;
-    }
-
-    .b {
-        background: blue;
-    }
-
-    .c {
-        background: white;
     }
 }
 </style>

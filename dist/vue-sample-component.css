@@ -1,19 +1,9 @@
 
 .sample-component {
-  background: #c8c8c8;
-}
-.sample-component .message {
-    font-size: 1rem;
-}
-.sample-component .test {
-    background: yellow;
+  background: #c8c803;
 }
 .sample-component .a {
     background: red;
 }
-.sample-component .b {
-    background: blue;
-}
-.sample-component .c {
-    background: white;
-}
+
+/*# sourceMappingURL=SampleComponent.vue.map */
